@@ -30,7 +30,8 @@ def split_bill(gross_bill):
             pass
         else:
             individual_bill = gross_bill / how_many_home
-            return individual_bill
+            print(individual_bill)
+            quit()
     #how_many_home = float(input("How many people were home this month? "))
     #individual_bill = gross_bill / how_many_home
     #print(individual_bill)
@@ -40,7 +41,3 @@ def split_bill(gross_bill):
 #print(x)
 
 main()
-
-
-
-
