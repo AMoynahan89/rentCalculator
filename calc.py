@@ -1,10 +1,11 @@
+"""
 # Main function 
 def main():
     gross_bill = get_bill()
     residents = get_residents()
     per_person = split_bill(gross_bill, residents)
     ea_appt_share = per_appt(per_person)
-    #net_bill = contributions(ea_appt_share)
+    net_bill = contributions(ea_appt_share)
     print(ea_appt_share)
 
 
@@ -31,13 +32,27 @@ def get_bill():
                 break       
             elif answer == "no":
                 return sum(total_bill)
+"""
 
 
-# Number of residents
+# Names and number of residents in each appt this month
 def get_residents():
-    return verify_input("How many people were home this month? ")
+    current_residents = [
+        {"name": "A + A", "multiplier": 2},
+        {"name": "S + J", "multiplier": 1.5},
+        {"name": "N + P", "multiplier": 1.5},
+        {"name": "G", "multiplier": 1},
+    ]
+    whos_gone = input("Was anyone gone this month? ").upper
+    for resident in current_residents:
+        if resident["name"] == whos_gone:
+            current_residents.remove(resident)
+            return current_residents
+        elif resident{"name"} 
 
+#get_residents()
 
+"""
 # gross_bill split by number of residents. Becomes per_person
 def split_bill(gross_bill, residents):
     individual_bill = gross_bill / residents
@@ -50,6 +65,17 @@ def per_appt(per_person):
     for res in current_residents:
         bill[res["name"]] = (res["multiplier"] * per_person + 20 * res["multiplier"])
     return bill
+"""
+
+
+#def contributions(appt_share):
+
+print("Hey Scott, There will be an additional fee this month if you dont like my programm,")
+print("")
+
+
+# Call main
+main()
    
 
 #def contributions(appt_share):
