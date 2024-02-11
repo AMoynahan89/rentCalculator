@@ -1,43 +1,62 @@
 
 def main():
     gross_bill = get_bill()
-    split_bill(gross_bill)
+    residents = get_residents()
+    per_person = split_bill(gross_bill, residents)
+    appt_share = per_appt(per_person)
+    print(appt_share)
     #add_dues()
     #subtract_expenses()
 
 
+def verify_input(prompt):
+    while True:
+        try:
+            value = float(input(prompt))
+            return value
+        except ValueError:
+            print("You must enter a number.")
+
+
 def get_bill():
+    total_bill = []
     while True:
-        try:
-            bill = float(input("What is you total bill this month? "))
-        except ValueError:
-            print("You must enter a number.")
-            pass
-        else:
-            return bill
+        total_bill.append(verify_input("Enter an expense: "))
+        while True:
+            answer = (input("Do you have any more expenses to enter? ").lower())
+            if answer != "yes" and answer != "no":
+                print("Please answer with 'yes' or 'no'.")
+            elif answer == "yes":
+                break       
+            elif answer == "no":
+                return sum(total_bill)
+            
+
+def get_residents():
+    return verify_input("How many people were home this month? ")
 
 
-"""
-105 + 114
-"""
+def split_bill(gross_bill, residents):
+    individual_bill = gross_bill / residents
+    return individual_bill
+    
 
-def split_bill(gross_bill):
-    while True:
-        try:
-            how_many_home = float(input("How many people were home this month? "))
-        except ValueError:
-            print("You must enter a number.")
-            pass
-        else:
-            individual_bill = gross_bill / how_many_home
-            print(individual_bill)
-            quit()
-    #how_many_home = float(input("How many people were home this month? "))
-    #individual_bill = gross_bill / how_many_home
-    #print(individual_bill)
+def per_appt(per_person):
+    bill = {}
+    for res in current_residents:
+        bill[res["name"]] = (res["multiplier"] * per_person + 20 * res["multiplier"])
+    return bill
+   
+
+#def get_deductions():
 
 
-#x = get_bill()
-#print(x)
+current_residents = [
+    {"name": "A + A", "multiplier": 2},
+    {"name": "S + J", "multiplier": 1.5},
+    {"name": "N + P", "multiplier": 1.5},
+    #{"name": "G", "multiplier": 1},
+]
+
 
 main()
