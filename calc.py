@@ -18,7 +18,7 @@ def get_bill():
     total_bill = []
     print("Enter the expenses that the whole house needs to pay this month. Type 'done' when finished:")
     while True:
-        expense = verify_input("Expense amount ($): ", allow_done=True)
+        expense = verify_input("Expense amount: $", allow_done=True)
         if expense == 'done':
             break
         total_bill.append(expense)
