@@ -1,92 +1,78 @@
-"""
-# Main function 
-def main():
-    gross_bill = get_bill()
-    residents = get_residents()
-    per_person = split_bill(gross_bill, residents)
-    ea_appt_share = per_appt(per_person)
-    net_bill = contributions(ea_appt_share)
-    print(ea_appt_share)
-
-
-# Convert inputs to floats
-def verify_input(prompt):
+def verify_input(prompt, expected_type='float', allow_done=False):
     while True:
-        try:
-            value = float(input(prompt))
-            return value
-        except ValueError:
-            print("You must enter a number.")
+        user_input = input(prompt)
+        if allow_done and user_input.lower() == 'done':
+            return 'done'
+        if expected_type == 'float':
+            try:
+                return float(user_input)
+            except ValueError:
+                print("Invalid input, please enter a number.")
+        elif expected_type == 'yes_no':
+            if user_input.lower() in ['yes', 'no']:
+                return user_input.lower()
+            else:
+                print("Please answer with 'yes' or 'no'.")
 
-
-# Get sum of all house expenses. Becomes gross_bill
 def get_bill():
     total_bill = []
+    print("Enter the expenses that the whole house needs to pay this month. Type 'done' when finished:")
     while True:
-        total_bill.append(verify_input("Enter an expense: "))
-        while True:
-            answer = (input("Do you have any more expenses to enter? ").lower())
-            if answer != "yes" and answer != "no":
-                print("Please answer with 'yes' or 'no'.")
-            elif answer == "yes":
-                break       
-            elif answer == "no":
-                return sum(total_bill)
-"""
+        expense = verify_input("Expense amount ($): ", allow_done=True)
+        if expense == 'done':
+            break
+        total_bill.append(expense)
+    return sum(total_bill)
 
-
-# Names and number of residents in each appt this month
 def get_residents():
-    current_residents = [
-        {"name": "A + A", "multiplier": 2},
-        {"name": "S + J", "multiplier": 1.5},
-        {"name": "N + P", "multiplier": 1.5},
-        {"name": "G", "multiplier": 1},
-    ]
-    whos_gone = input("Was anyone gone this month? ").upper
-    for resident in current_residents:
-        if resident["name"] == whos_gone:
-            current_residents.remove(resident)
-            return current_residents
-        elif resident{"name"} 
+    active_residents = 0
+    for apt in current_residents:
+        response = verify_input(f"Was {apt['name']} home this month? (yes/no): ", expected_type='yes_no')
+        if response == 'yes':
+            active_residents += apt['occupancy_factor']
+        else:
+            apt['occupancy_factor'] = 0
+    return active_residents
 
-#get_residents()
-
-"""
-# gross_bill split by number of residents. Becomes per_person
-def split_bill(gross_bill, residents):
-    individual_bill = gross_bill / residents
-    return individual_bill
-    
-
-# Returns a bill for each appartment. Becomes ea_appt_share
 def per_appt(per_person):
     bill = {}
     for res in current_residents:
-        bill[res["name"]] = (res["multiplier"] * per_person + 20 * res["multiplier"])
+        if res["occupancy_factor"] > 0:
+            bill[res["name"]] = res["occupancy_factor"] * (per_person + 20)
+        else:
+            bill[res["name"]] = 0.00
     return bill
-"""
+
+def individual_expenses(ea_appt_share):
+    print("\nEnter any purchases made for the house by an individual. These will be deducted from that apartment's bill. Type 'done' when finished.")
+    while True:
+        apt_name = input("Enter the apartment making a purchase or 'done' to finish: ").title()  # Correctly applied .title() method
+        if apt_name == 'Done':  # Correctly check against 'Done'
+            break
+        if apt_name in ea_appt_share:
+            amount = verify_input("Purchase amount: $") 
+            ea_appt_share[apt_name] -= amount
+        else:
+            print("Apartment not found.")
+    return ea_appt_share
 
 
-#def contributions(appt_share):
+def main():
+    gross_bill = get_bill()
+    residents = get_residents()
+    per_person = gross_bill / residents
+    ea_appt_share = per_appt(per_person)
+    ea_appt_share = individual_expenses(ea_appt_share)
 
-print("Hey Scott, There will be an additional fee this month if you dont like my programm,")
-print("")
+    print("\nFinal Billing Summary:")
+    for apt, amount in ea_appt_share.items():
+        print(f"{apt}: ${amount:.2f}")
 
-
-# Call main
-main()
-   
-
-#def contributions(appt_share):
-
-# Names and how many in each appt.
 current_residents = [
-    {"name": "A + A", "multiplier": 2},
-    {"name": "S + J", "multiplier": 1.5},
-    {"name": "N + P", "multiplier": 1.5},
-    {"name": "G", "multiplier": 1},
+    {"name": "Mama-Dada", "occupancy_factor": 2},
+    {"name": "The Big Watutsie", "occupancy_factor": 1.5},
+    {"name": "Nealson", "occupancy_factor": 1.5},
+    {"name": "GareBear", "occupancy_factor": 1},
 ]
 
-# Call main
 main()
