@@ -16,9 +16,9 @@ def verify_input(prompt, expected_type='float', allow_done=False):
 
 def get_bill():
     total_bill = []
-    print("Enter the bills recieved this month. You can enter one at a time. Type 'done' when finished:")
+    print("Enter the expenses that the whole house needs to pay this month. Type 'done' when finished:")
     while True:
-        expense = verify_input("Bill amount: $", allow_done=True)
+        expense = verify_input("Expense amount ($): ", allow_done=True)
         if expense == 'done':
             break
         total_bill.append(expense)
