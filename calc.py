@@ -75,4 +75,6 @@ current_residents = [
     {"name": "GareBear", "occupancy_factor": 1},
 ]
 
-main()
+
+if __name__ == "__main__":
+    main()
