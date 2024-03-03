@@ -69,10 +69,12 @@ def main():
         print(f"{apt}: ${amount:.2f}")
 
 current_residents = [
-    {"name": "Mama-Dada", "occupancy_factor": 2},
+    {"name": "Mama-Dada", "occupancy_factor": 2.5},
     {"name": "The Big Watutsie", "occupancy_factor": 1.5},
     {"name": "Nealson", "occupancy_factor": 1.5},
     {"name": "GareBear", "occupancy_factor": 1},
 ]
 
-main()
+
+if __name__ == "__main__":
+    main()
